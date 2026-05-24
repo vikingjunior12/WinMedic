@@ -22,9 +22,12 @@ pub struct OfficeInstallOptions {
     pub include_access: bool,
     pub include_publisher: bool,
     pub include_skype_for_business: bool,
+    pub language: String,
 }
 
 pub fn build_install_xml(opts: &OfficeInstallOptions) -> String {
+    let lang = if opts.language.is_empty() { "de-de" } else { &opts.language };
+
     let mut excluded = vec!["Groove"];
     if !opts.include_access {
         excluded.push("Access");
@@ -46,7 +49,7 @@ pub fn build_install_xml(opts: &OfficeInstallOptions) -> String {
   <RemoveMSI All="True" />
   <Add OfficeClientEdition="64" Channel="Current">
     <Product ID="O365ProPlusRetail">
-      <Language ID="de-de" />
+      <Language ID="{lang}" />
 {exclude_lines}    </Product>
   </Add>
   <Updates Enabled="TRUE" Channel="Current" />

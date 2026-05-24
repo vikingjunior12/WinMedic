@@ -39,6 +39,7 @@ export interface SetupOptions {
   include_access: boolean;
   include_publisher: boolean;
   include_skype_for_business: boolean;
+  office_language: string;
   uninstall_office: boolean;
   quick_repair: boolean;
   online_repair: boolean;

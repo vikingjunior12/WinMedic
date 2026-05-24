@@ -59,6 +59,7 @@ interface AppState {
   include_access: boolean;
   include_publisher: boolean;
   include_skype_for_business: boolean;
+  office_language: string;
   // Repair / Deinstallation
   uninstall_office: boolean;
   quick_repair: boolean;
@@ -111,6 +112,7 @@ const DEFAULT_STATE: AppState = {
   include_access: false,
   include_publisher: false,
   include_skype_for_business: false,
+  office_language: "de-de",
   uninstall_office: false,
   quick_repair: false,
   online_repair: false,

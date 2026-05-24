@@ -21,6 +21,23 @@ export function SoftwareSection() {
 
       {store.install_office && (
         <div className="sub-options">
+          <span className="sub-options-label">Language:</span>
+          <select
+            className="select-row"
+            value={store.office_language}
+            onChange={(e) => store.set("office_language", e.target.value)}
+          >
+            <option value="de-de">Deutsch (de-de)</option>
+            <option value="en-us">English US (en-us)</option>
+            <option value="en-gb">English UK (en-gb)</option>
+            <option value="fr-fr">Français (fr-fr)</option>
+            <option value="it-it">Italiano (it-it)</option>
+            <option value="es-es">Español (es-es)</option>
+            <option value="nl-nl">Nederlands (nl-nl)</option>
+            <option value="pl-pl">Polski (pl-pl)</option>
+            <option value="pt-pt">Português (pt-pt)</option>
+            <option value="tr-tr">Türkçe (tr-tr)</option>
+          </select>
           <span className="sub-options-label">Include Office components:</span>
           <label className="checkbox-row">
             <input

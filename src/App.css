@@ -424,6 +424,24 @@ input.input-error { border-color: var(--error-color); }
   margin-bottom: 2px;
 }
 
+/* ── Select Dropdown ── */
+.select-row {
+  width: 100%;
+  padding: 4px 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+
+.select-row:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
 /* ── Winget ── */
 .winget-list {
   display: flex;

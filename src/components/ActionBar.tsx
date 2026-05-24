@@ -18,6 +18,7 @@ export function ActionBar() {
       include_access: store.include_access,
       include_publisher: store.include_publisher,
       include_skype_for_business: store.include_skype_for_business,
+      office_language: store.office_language,
       uninstall_office: store.uninstall_office,
       quick_repair: store.quick_repair,
       online_repair: store.online_repair,

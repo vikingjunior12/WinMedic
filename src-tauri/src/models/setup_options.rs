@@ -13,6 +13,7 @@ pub struct SetupOptions {
     pub include_access: bool,
     pub include_publisher: bool,
     pub include_skype_for_business: bool,
+    pub office_language: String,
     // Repair / Deinstallation
     pub uninstall_office: bool,
     pub quick_repair: bool,
@@ -40,6 +41,7 @@ impl SetupOptions {
             include_access: self.include_access,
             include_publisher: self.include_publisher,
             include_skype_for_business: self.include_skype_for_business,
+            language: self.office_language.clone(),
         }
     }
 }
