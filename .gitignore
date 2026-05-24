@@ -2,3 +2,18 @@ node_modules/
 dist/
 src-tauri/target/
 .env
+
+# Claude Code (local settings)
+.claude/
+
+# Internal planning & dev notes
+ARCHITECTURE.md
+IMPLEMENTATION_STATUS.md
+PROJECT_RULES.md
+2026-05-23-o365utility-architecture.md
+*.architecture.md
+
+# Binaries (ODT setup.exe — download separately)
+assets/setup.exe
+src-tauri/resources/setup.exe
+*.exe
