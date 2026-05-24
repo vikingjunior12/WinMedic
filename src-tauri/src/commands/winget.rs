@@ -1,5 +1,5 @@
 use crate::models::update_entry::WingetEntry;
-use crate::services::process;
+use crate::services::{powershell, process};
 use serde::Deserialize;
 
 #[derive(Deserialize, Default)]
@@ -28,24 +28,22 @@ struct WingetPackage {
 
 #[tauri::command]
 pub async fn check_winget_available() -> bool {
-    process::run("winget", &["--version"]).await.is_ok_and(|r| r.exit_code == 0)
+    process::run("winget", &["--version"])
+        .await
+        .is_ok_and(|r| r.exit_code == 0)
 }
 
 #[tauri::command]
 pub async fn get_winget_updates() -> Result<Vec<WingetEntry>, String> {
-    let result = process::run(
-        "winget",
-        &[
-            "upgrade",
-            "--output",
-            "json",
-            "--accept-source-agreements",
-        ],
+    // winget uses Windows Console APIs that don't work when piped directly
+    // with CREATE_NO_WINDOW — running via PowerShell fixes subprocess output capture.
+    let result = powershell::run(
+        "winget upgrade --output json --accept-source-agreements --disable-interactivity 2>$null",
     )
     .await?;
 
-    // Winget gibt auch bei vorhandenen Updates Exit 0 zurück
-    let output: WingetOutput = serde_json::from_str(&result.stdout).unwrap_or_default();
+    let json = extract_json(&result.stdout);
+    let output: WingetOutput = serde_json::from_str(json).unwrap_or_default();
 
     let entries = output
         .sources
@@ -63,6 +61,12 @@ pub async fn get_winget_updates() -> Result<Vec<WingetEntry>, String> {
     Ok(entries)
 }
 
+/// Winget sometimes prepends a UTF-8 BOM or stray text before the JSON object.
+fn extract_json(s: &str) -> &str {
+    let s = s.trim_start_matches('\u{feff}');
+    s.find('{').map(|i| &s[i..]).unwrap_or(s)
+}
+
 #[tauri::command]
 pub async fn upgrade_winget_package(package_id: String) -> Result<String, String> {
     let result = process::run(
@@ -72,6 +76,7 @@ pub async fn upgrade_winget_package(package_id: String) -> Result<String, String
             "--id",
             &package_id,
             "--silent",
+            "--disable-interactivity",
             "--accept-package-agreements",
             "--accept-source-agreements",
         ],
