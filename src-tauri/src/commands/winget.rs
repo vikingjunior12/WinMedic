@@ -37,12 +37,12 @@ pub async fn check_winget_available() -> bool {
 pub async fn get_winget_updates() -> Result<Vec<WingetEntry>, String> {
     // winget uses Windows Console APIs that don't work when piped directly
     // with CREATE_NO_WINDOW — running via PowerShell fixes subprocess output capture.
-    let result = powershell::run(
+    let output = powershell::run(
         "winget upgrade --output json --accept-source-agreements --disable-interactivity 2>$null",
     )
     .await?;
 
-    let json = extract_json(&result.stdout);
+    let json = extract_json(&output);
     let output: WingetOutput = serde_json::from_str(json).unwrap_or_default();
 
     let entries = output
