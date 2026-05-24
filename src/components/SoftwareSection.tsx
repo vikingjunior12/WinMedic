@@ -38,6 +38,54 @@ export function SoftwareSection() {
             <option value="pt-pt">Português (pt-pt)</option>
             <option value="tr-tr">Türkçe (tr-tr)</option>
           </select>
+
+          <span className="sub-options-label">Update Channel:</span>
+          <select
+            className="select-row"
+            value={store.office_channel}
+            onChange={(e) => store.set("office_channel", e.target.value)}
+          >
+            <option value="Current">Current – monthly, latest features</option>
+            <option value="MonthlyEnterprise">Monthly Enterprise – monthly, 1 month behind</option>
+            <option value="SemiAnnualEnterprise">Semi-Annual Enterprise – twice a year, most stable</option>
+            <option value="SemiAnnualEnterprisePreview">Semi-Annual Enterprise Preview</option>
+            <option value="BetaChannel">Beta Channel – insider builds</option>
+          </select>
+
+          <span className="sub-options-label">Architecture:</span>
+          <select
+            className="select-row"
+            value={store.office_architecture}
+            onChange={(e) => store.set("office_architecture", e.target.value)}
+          >
+            <option value="64">64-bit (recommended)</option>
+            <option value="32">32-bit (legacy add-ins only)</option>
+          </select>
+
+          <label className="checkbox-row" title="Disable if updates are managed centrally (WSUS / Intune)">
+            <input
+              type="checkbox"
+              checked={store.office_auto_updates}
+              onChange={(e) => store.set("office_auto_updates", e.target.checked)}
+            />
+            <div>
+              <span>Auto-Updates</span>
+              <span className="hint">Disable for centrally managed environments</span>
+            </div>
+          </label>
+
+          <label className="checkbox-row" title="Required for RDS / Terminal Server (shared sessions)">
+            <input
+              type="checkbox"
+              checked={store.office_shared_computer_activation}
+              onChange={(e) => store.set("office_shared_computer_activation", e.target.checked)}
+            />
+            <div>
+              <span>Shared Computer Activation</span>
+              <span className="hint">For RDS / Terminal Server</span>
+            </div>
+          </label>
+
           <span className="sub-options-label">Include Office components:</span>
           <label className="checkbox-row">
             <input

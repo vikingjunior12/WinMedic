@@ -23,21 +23,23 @@ pub struct OfficeInstallOptions {
     pub include_publisher: bool,
     pub include_skype_for_business: bool,
     pub language: String,
+    pub channel: String,
+    pub architecture: String,
+    pub auto_updates: bool,
+    pub shared_computer_activation: bool,
 }
 
 pub fn build_install_xml(opts: &OfficeInstallOptions) -> String {
-    let lang = if opts.language.is_empty() { "de-de" } else { &opts.language };
+    let lang    = if opts.language.is_empty()     { "de-de"   } else { &opts.language };
+    let channel = if opts.channel.is_empty()      { "Current" } else { &opts.channel };
+    let arch    = if opts.architecture.is_empty() { "64"      } else { &opts.architecture };
+    let updates = if opts.auto_updates { "TRUE" } else { "FALSE" };
+    let sca     = if opts.shared_computer_activation { "1" } else { "0" };
 
     let mut excluded = vec!["Groove"];
-    if !opts.include_access {
-        excluded.push("Access");
-    }
-    if !opts.include_publisher {
-        excluded.push("Publisher");
-    }
-    if !opts.include_skype_for_business {
-        excluded.push("Lync");
-    }
+    if !opts.include_access          { excluded.push("Access"); }
+    if !opts.include_publisher       { excluded.push("Publisher"); }
+    if !opts.include_skype_for_business { excluded.push("Lync"); }
 
     let exclude_lines: String = excluded
         .iter()
@@ -47,15 +49,16 @@ pub fn build_install_xml(opts: &OfficeInstallOptions) -> String {
     format!(
         r#"<Configuration>
   <RemoveMSI All="True" />
-  <Add OfficeClientEdition="64" Channel="Current">
+  <Add OfficeClientEdition="{arch}" Channel="{channel}">
     <Product ID="O365ProPlusRetail">
       <Language ID="{lang}" />
 {exclude_lines}    </Product>
   </Add>
-  <Updates Enabled="TRUE" Channel="Current" />
+  <Updates Enabled="{updates}" Channel="{channel}" />
   <Display Level="None" AcceptEULA="TRUE" />
   <Property Name="AUTOACTIVATE" Value="1" />
   <Property Name="FORCEAPPSHUTDOWN" Value="TRUE" />
+  <Property Name="SharedComputerLicensing" Value="{sca}" />
 </Configuration>"#
     )
 }

@@ -60,6 +60,10 @@ interface AppState {
   include_publisher: boolean;
   include_skype_for_business: boolean;
   office_language: string;
+  office_channel: string;
+  office_architecture: string;
+  office_auto_updates: boolean;
+  office_shared_computer_activation: boolean;
   // Repair / Deinstallation
   uninstall_office: boolean;
   quick_repair: boolean;
@@ -113,6 +117,10 @@ const DEFAULT_STATE: AppState = {
   include_publisher: false,
   include_skype_for_business: false,
   office_language: "de-de",
+  office_channel: "Current",
+  office_architecture: "64",
+  office_auto_updates: true,
+  office_shared_computer_activation: false,
   uninstall_office: false,
   quick_repair: false,
   online_repair: false,

@@ -40,6 +40,10 @@ export interface SetupOptions {
   include_publisher: boolean;
   include_skype_for_business: boolean;
   office_language: string;
+  office_channel: string;
+  office_architecture: string;
+  office_auto_updates: boolean;
+  office_shared_computer_activation: boolean;
   uninstall_office: boolean;
   quick_repair: boolean;
   online_repair: boolean;

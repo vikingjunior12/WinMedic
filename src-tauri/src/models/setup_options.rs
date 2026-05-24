@@ -14,6 +14,10 @@ pub struct SetupOptions {
     pub include_publisher: bool,
     pub include_skype_for_business: bool,
     pub office_language: String,
+    pub office_channel: String,
+    pub office_architecture: String,
+    pub office_auto_updates: bool,
+    pub office_shared_computer_activation: bool,
     // Repair / Deinstallation
     pub uninstall_office: bool,
     pub quick_repair: bool,
@@ -42,6 +46,10 @@ impl SetupOptions {
             include_publisher: self.include_publisher,
             include_skype_for_business: self.include_skype_for_business,
             language: self.office_language.clone(),
+            channel: self.office_channel.clone(),
+            architecture: self.office_architecture.clone(),
+            auto_updates: self.office_auto_updates,
+            shared_computer_activation: self.office_shared_computer_activation,
         }
     }
 }
