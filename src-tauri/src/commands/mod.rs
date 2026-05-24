@@ -1,6 +1,7 @@
 pub mod account;
 pub mod cache;
 pub mod office;
+pub mod onedrive;
 pub mod onenote;
 pub mod password;
 pub mod run_setup;

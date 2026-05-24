@@ -8,6 +8,7 @@ import { AccountSection } from "./components/AccountSection";
 import { SoftwareSection } from "./components/SoftwareSection";
 import { RepairSection } from "./components/RepairSection";
 import { CacheSection } from "./components/CacheSection";
+import { OnedriveSection } from "./components/OnedriveSection";
 import { WingetSection } from "./components/WingetSection";
 import { StatusPanel } from "./components/StatusPanel";
 import { LogViewer } from "./components/LogViewer";
@@ -81,6 +82,7 @@ export default function App() {
           <SoftwareSection />
           <RepairSection />
           <CacheSection />
+          <OnedriveSection />
           {store.wingetAvailable && <WingetSection />}
         </div>
         <div className="right-col">

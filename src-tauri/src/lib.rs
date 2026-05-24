@@ -18,6 +18,8 @@ pub fn run() {
             office::repair_office_quick,
             office::repair_office_online,
             office::reset_office_license,
+            onedrive::uninstall_onedrive,
+            onedrive::install_onedrive,
             teams::install_teams,
             teams::clear_teams_cache,
             onenote::install_onenote_backup_exporter,

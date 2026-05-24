@@ -46,6 +46,8 @@ export interface SetupOptions {
   clear_office_cache: boolean;
   clear_onenote_cache: boolean;
   clear_teams_cache: boolean;
+  uninstall_onedrive: boolean;
+  install_onedrive: boolean;
   winget_packages: string[];
   dry_run: boolean;
 }

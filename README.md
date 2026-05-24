@@ -1,24 +1,28 @@
 # WinMedic
 
-A portable Windows desktop tool for IT administrators to troubleshoot, repair, and maintain Windows workstations in office and school environments.
+A portable Windows desktop tool for anyone dealing with common Windows problems — whether you're a home user, a student, or someone who just wants things to work again.
+
+WinMedic brings together the most common fixes in one place: reinstall or repair Office, clean up caches, fix OneDrive, update software, and more. No technical knowledge required. New features are added as new problem areas come up.
 
 Built with **Tauri 2.0** (Rust backend) + **React / TypeScript** frontend. Ships as a single `.exe` — no installer, no runtime dependencies.
 
 ---
 
-## Features
+## What it can fix
 
-| Module | Description |
+| Module | What it does |
 |---|---|
-| **Office Setup** | Silent install of Microsoft 365 via ODT (Office Deployment Tool) |
-| **Office Repair** | Online and local repair of existing Office installations |
+| **Office Setup** | Silent install of Microsoft 365 via ODT |
+| **Office Repair** | Online and local repair of broken Office installations |
+| **Office Uninstall** | Fully removes Office |
 | **Teams** | Clear Teams cache (Classic & New Teams 2.x) |
-| **Account** | Create local admin accounts for troubleshooting |
-| **Cache** | Clear Windows credential cache, Office token cache |
+| **OneDrive** | Install or uninstall OneDrive (supports classic and MSIX installs) |
+| **Account** | Create local user accounts |
+| **Cache** | Clear Office, OneNote, and Teams cache |
 | **OneNote** | Reset and repair OneNote data |
-| **Winget** | List and apply pending software updates via winget |
-| **System Info** | Display OS, hardware, domain, and Office install status |
-| **Password** | Generate and set cryptographically secure passwords |
+| **Winget** | List and apply pending software updates |
+| **System Info** | Shows OS, hardware, and network info |
+| **Password** | Generate cryptographically secure passwords |
 
 ---
 
@@ -26,8 +30,7 @@ Built with **Tauri 2.0** (Rust backend) + **React / TypeScript** frontend. Ships
 
 - Windows 10 / 11 (x64)
 - Administrator privileges (UAC prompt on launch)
-- Internet connection for Office online repair and winget updates
-- [Office Deployment Tool](https://www.microsoft.com/en-us/download/details.aspx?id=49117) `setup.exe` placed in `assets/` (not included)
+- Internet connection for online repair, installs, and winget updates
 
 ---
 
@@ -48,13 +51,13 @@ Built with **Tauri 2.0** (Rust backend) + **React / TypeScript** frontend. Ships
 ```
 WinMedic/
 ├── src/                    # React frontend
-│   ├── components/         # UI sections (Office, Teams, Cache, ...)
+│   ├── components/         # UI sections
 │   ├── hooks/              # useEvent, useInvoke
 │   ├── store/              # Zustand state
 │   └── types/              # Tauri event types
 ├── src-tauri/
 │   ├── src/
-│   │   ├── commands/       # Tauri commands (account, office, teams, ...)
+│   │   ├── commands/       # Tauri commands (office, teams, onedrive, ...)
 │   │   ├── models/         # Shared data types
 │   │   └── services/       # PowerShell, process, registry, network
 │   └── tauri.conf.json
@@ -86,21 +89,6 @@ npm run tauri build
 ```
 
 The output `.exe` is in `src-tauri/target/release/`.
-
-> **Note:** Place the Office Deployment Tool `setup.exe` in `assets/` and `src-tauri/resources/` before building — it is bundled into the final executable.
-
----
-
-## Office Deployment Configuration
-
-The included `assets/configuration-Office365-x64.xml` configures a silent Microsoft 365 Apps for Enterprise install:
-
-- 64-bit, German (`de-de`)
-- Current channel, auto-updates enabled
-- OneDrive (Groove) excluded
-- Silent install, EULA auto-accepted
-
-Modify this file to match your organization's needs before building.
 
 ---
 

@@ -68,6 +68,9 @@ interface AppState {
   clear_office_cache: boolean;
   clear_onenote_cache: boolean;
   clear_teams_cache: boolean;
+  // OneDrive
+  uninstall_onedrive: boolean;
+  install_onedrive: boolean;
   // Winget
   wingetUpdates: WingetEntry[];
   selectedWingetPackages: string[];
@@ -115,6 +118,8 @@ const DEFAULT_STATE: AppState = {
   clear_office_cache: false,
   clear_onenote_cache: false,
   clear_teams_cache: false,
+  uninstall_onedrive: false,
+  install_onedrive: false,
   wingetUpdates: [],
   selectedWingetPackages: [],
   wingetAvailable: false,

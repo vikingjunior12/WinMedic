@@ -22,6 +22,9 @@ pub struct SetupOptions {
     pub clear_office_cache: bool,
     pub clear_onenote_cache: bool,
     pub clear_teams_cache: bool,
+    // OneDrive
+    pub uninstall_onedrive: bool,
+    pub install_onedrive: bool,
     // Winget
     pub winget_packages: Vec<String>,
     pub dry_run: bool,

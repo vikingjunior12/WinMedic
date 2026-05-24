@@ -25,6 +25,8 @@ export function ActionBar() {
       clear_office_cache: store.clear_office_cache,
       clear_onenote_cache: store.clear_onenote_cache,
       clear_teams_cache: store.clear_teams_cache,
+      uninstall_onedrive: store.uninstall_onedrive,
+      install_onedrive: store.install_onedrive,
       winget_packages: store.selectedWingetPackages,
       dry_run: store.dry_run,
     };

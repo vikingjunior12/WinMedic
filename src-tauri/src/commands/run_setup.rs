@@ -1,4 +1,4 @@
-use crate::commands::{account, cache, office, onenote, teams, winget};
+use crate::commands::{account, cache, office, onedrive, onenote, teams, winget};
 use crate::models::setup_options::SetupOptions;
 use crate::models::step_result::{LogEntry, StepResult};
 use chrono::Local;
@@ -43,6 +43,8 @@ pub fn validate_setup_options(options: SetupOptions) -> Result<(), String> {
         || options.clear_onenote_cache
         || options.clear_teams_cache
         || !options.winget_packages.is_empty()
+        || options.uninstall_onedrive
+        || options.install_onedrive
     {
         // Mindestens eine Aktion ausgewählt
     } else if options.username.is_empty() {
@@ -110,6 +112,8 @@ pub async fn run_setup(app: AppHandle, options: SetupOptions) -> Result<Vec<Step
         if options.clear_office_cache { n += 1; }
         if options.clear_onenote_cache { n += 1; }
         if options.clear_teams_cache { n += 1; }
+        if options.uninstall_onedrive { n += 1; }
+        if options.install_onedrive { n += 1; }
         n += options.winget_packages.len();
         n
     };
@@ -202,7 +206,21 @@ pub async fn run_setup(app: AppHandle, options: SetupOptions) -> Result<Vec<Step
         });
     }
 
-    // 11. Winget-Updates
+    // 11. OneDrive deinstallieren
+    if options.uninstall_onedrive {
+        step!(app, steps, done, total, "Uninstall OneDrive", dry_run, async {
+            onedrive::uninstall_onedrive().await
+        });
+    }
+
+    // 12. OneDrive installieren
+    if options.install_onedrive {
+        step!(app, steps, done, total, "Install OneDrive", dry_run, async {
+            onedrive::install_onedrive().await
+        });
+    }
+
+    // 13. Winget-Updates
     for pkg_id in &options.winget_packages {
         let pkg = pkg_id.clone();
         let name = format!("Update: {pkg}");
