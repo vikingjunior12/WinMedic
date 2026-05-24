@@ -10,6 +10,7 @@ pub struct ProcessResult {
 pub async fn run(exe: &str, args: &[&str]) -> Result<ProcessResult, String> {
     let mut cmd = Command::new(exe);
     cmd.args(args)
+        .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
 
@@ -35,6 +36,7 @@ pub async fn run_with_env(
 ) -> Result<ProcessResult, String> {
     let mut cmd = Command::new(exe);
     cmd.args(args)
+        .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped());
 
