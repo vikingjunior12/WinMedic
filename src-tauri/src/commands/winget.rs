@@ -36,7 +36,9 @@ pub async fn get_winget_updates() -> Result<Vec<WingetEntry>, String> {
 fn parse_winget_table(output: &str) -> Vec<WingetEntry> {
     let lines: Vec<&str> = output
         .lines()
-        .map(|l| l.trim_end_matches('\r'))
+        // winget overwrites progress spinners via \r on the same \n-line as the header;
+        // take the last \r-segment so we get the actual content without spinner garbage.
+        .map(|l| l.split('\r').last().unwrap_or(l))
         .collect();
 
     // Separator line: long run of dashes (language-independent)
