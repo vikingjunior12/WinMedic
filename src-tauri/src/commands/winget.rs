@@ -1,5 +1,5 @@
 use crate::models::update_entry::WingetEntry;
-use crate::services::{powershell, process};
+use crate::services::process;
 
 #[tauri::command]
 pub async fn check_winget_available() -> bool {
@@ -10,16 +10,21 @@ pub async fn check_winget_available() -> bool {
 
 #[tauri::command]
 pub async fn get_winget_updates() -> Result<Vec<WingetEntry>, String> {
-    // --output json not available in winget <1.6; parse table text output instead.
-    // .unwrap_or_default() so a non-zero exit code (e.g. source refresh error)
-    // yields an empty list rather than propagating an error.
-    let output = powershell::run(
-        "winget upgrade --accept-source-agreements --disable-interactivity 2>$null",
+    // Run winget directly (same as C# CareumSupportTool approach): CreateNoWindow +
+    // redirected stdout. Avoid PowerShell wrapper — it swallows winget's output.
+    // --include-unknown: also list packages where installed version is unknown ("< x.y.z").
+    let result = process::run(
+        "winget",
+        &[
+            "upgrade",
+            "--include-unknown",
+            "--accept-source-agreements",
+            "--disable-interactivity",
+        ],
     )
-    .await
-    .unwrap_or_default();
+    .await?;
 
-    Ok(parse_winget_table(&output))
+    Ok(parse_winget_table(&result.stdout))
 }
 
 /// Parses winget's fixed-width table output (works for DE/EN/FR locales).
