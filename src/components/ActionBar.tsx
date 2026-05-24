@@ -64,7 +64,7 @@ export function ActionBar() {
   async function exportLog() {
     const lines = store.logs.map((l) => `[${l.timestamp}] [${l.level.toUpperCase()}] ${l.message}`).join("\n");
     const path = await save({
-      defaultPath: `o365utility-log-${new Date().toISOString().slice(0, 10)}.txt`,
+      defaultPath: `winmedic-log-${new Date().toISOString().slice(0, 10)}.txt`,
       filters: [{ name: "Text file", extensions: ["txt"] }],
     });
     if (path) {

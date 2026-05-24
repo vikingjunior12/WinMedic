@@ -6,7 +6,16 @@ export function CacheSection() {
   return (
     <section className="card">
       <h2 className="card-title">Clear Cache</h2>
-      <label className="checkbox-row">
+      <label
+        className="checkbox-row"
+        title={
+          "Clears the following paths:\n" +
+          "• %LOCALAPPDATA%\\Microsoft\\Office\\16.0\\OfficeFileCache\n" +
+          "• %LOCALAPPDATA%\\Microsoft\\Office\\16.0\\Wef\n" +
+          "• %LOCALAPPDATA%\\Packages\\Microsoft.Win32WebViewHost_cw5n1h2txyewy\\AC\\#!123\\INetCache\n" +
+          "• %LOCALAPPDATA%\\Microsoft\\Outlook\\HubAppFileCache"
+        }
+      >
         <input
           type="checkbox"
           checked={clear_office_cache}
@@ -14,7 +23,10 @@ export function CacheSection() {
         />
         <span>Office Cache</span>
       </label>
-      <label className="checkbox-row">
+      <label
+        className="checkbox-row"
+        title={"Clears the following path:\n• %LOCALAPPDATA%\\Microsoft\\OneNote\\16.0\\cache"}
+      >
         <input
           type="checkbox"
           checked={clear_onenote_cache}
@@ -22,7 +34,10 @@ export function CacheSection() {
         />
         <span>OneNote Cache</span>
       </label>
-      <label className="checkbox-row">
+      <label
+        className="checkbox-row"
+        title={"Clears the following path:\n• %LOCALAPPDATA%\\Packages\\MSTeams_8wekyb3d8bbwe\\LocalCache\\Microsoft\\MSTeams"}
+      >
         <input
           type="checkbox"
           checked={clear_teams_cache}

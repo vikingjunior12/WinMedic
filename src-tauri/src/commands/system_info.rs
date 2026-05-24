@@ -57,10 +57,10 @@ pub fn check_is_admin() -> bool {
     {
         use winreg::{enums::HKEY_LOCAL_MACHINE, RegKey};
         RegKey::predef(HKEY_LOCAL_MACHINE)
-            .create_subkey(r"SOFTWARE\O365UtilityAdminCheck")
+            .create_subkey(r"SOFTWARE\WinMedicAdminCheck")
             .map(|_| {
                 let _ = RegKey::predef(HKEY_LOCAL_MACHINE)
-                    .delete_subkey(r"SOFTWARE\O365UtilityAdminCheck");
+                    .delete_subkey(r"SOFTWARE\WinMedicAdminCheck");
                 true
             })
             .unwrap_or(false)

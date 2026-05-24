@@ -58,7 +58,7 @@ pub fn build_install_xml(opts: &OfficeInstallOptions) -> String {
 }
 
 fn extract_odt() -> Result<PathBuf, String> {
-    let path = std::env::temp_dir().join("o365util_setup.exe");
+    let path = std::env::temp_dir().join("winmedic_setup.exe");
     std::fs::write(&path, ODT_SETUP)
         .map_err(|e| format!("Failed to extract setup.exe: {e}"))?;
     Ok(path)
@@ -90,7 +90,7 @@ pub async fn install_office(options: OfficeInstallOptions) -> Result<String, Str
 
     let odt = extract_odt()?;
     let xml = build_install_xml(&options);
-    let xml_path = write_xml("o365util_install.xml", &xml)?;
+    let xml_path = write_xml("winmedic_install.xml", &xml)?;
 
     let result = process::run(
         odt.to_str().unwrap(),
@@ -135,7 +135,7 @@ pub async fn repair_office_online(options: OfficeInstallOptions) -> Result<Strin
     let odt = extract_odt()?;
 
     // Schritt 1: Entfernen
-    let remove_xml = write_xml("o365util_remove.xml", OFFICE_REMOVE_XML)?;
+    let remove_xml = write_xml("winmedic_remove.xml", OFFICE_REMOVE_XML)?;
     let remove = process::run(
         odt.to_str().unwrap(),
         &["/configure", remove_xml.to_str().unwrap()],
@@ -158,7 +158,7 @@ pub async fn repair_office_online(options: OfficeInstallOptions) -> Result<Strin
     }
 
     // Schritt 2: Neuinstallation
-    let install_xml_path = write_xml("o365util_install.xml", &build_install_xml(&options))?;
+    let install_xml_path = write_xml("winmedic_install.xml", &build_install_xml(&options))?;
     let install = process::run(
         odt.to_str().unwrap(),
         &["/configure", install_xml_path.to_str().unwrap()],
@@ -178,7 +178,7 @@ pub async fn repair_office_online(options: OfficeInstallOptions) -> Result<Strin
 #[tauri::command]
 pub async fn uninstall_office() -> Result<String, String> {
     let odt = extract_odt()?;
-    let remove_xml = write_xml("o365util_remove.xml", OFFICE_REMOVE_XML)?;
+    let remove_xml = write_xml("winmedic_remove.xml", OFFICE_REMOVE_XML)?;
 
     let result = process::run(
         odt.to_str().unwrap(),

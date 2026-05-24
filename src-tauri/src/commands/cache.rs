@@ -1,7 +1,7 @@
 use crate::services::powershell;
 use crate::services::process;
 
-// Exakt dieselben Pfade wie CareumSchulstartTool (OfficeCacheClearService.cs)
+
 const OFFICE_CACHE_PATHS: &[&str] = &[
     r"%LOCALAPPDATA%\Microsoft\Office\16.0\OfficeFileCache",
     r"%LOCALAPPDATA%\Microsoft\Office\16.0\Wef",

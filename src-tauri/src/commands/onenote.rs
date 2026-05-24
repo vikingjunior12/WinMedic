@@ -1,6 +1,6 @@
 use crate::services::{powershell, process};
 
-// Exakt wie CareumSchulstartTool (OneNoteCacheClearService.cs)
+
 const ONENOTE_CACHE_PATH: &str = r"%LOCALAPPDATA%\Microsoft\OneNote\16.0\cache";
 const ONENOTE_PROCESSES: &[&str] = &["onenotem", "onenote", "msoia", "ONENOTE"];
 

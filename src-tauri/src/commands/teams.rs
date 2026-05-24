@@ -25,7 +25,7 @@ pub async fn install_teams() -> Result<String, String> {
         .await
         .map_err(|e| format!("Teams download failed: {e}"))?;
 
-    let installer = std::env::temp_dir().join("o365util_TeamsSetup.exe");
+    let installer = std::env::temp_dir().join("winmedic_TeamsSetup.exe");
     std::fs::write(&installer, &bytes)
         .map_err(|e| format!("Failed to save Teams installer: {e}"))?;
 

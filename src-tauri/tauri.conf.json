@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "O365Utility",
+  "productName": "WinMedic",
   "version": "0.1.0",
-  "identifier": "ch.careum.o365utility",
+  "identifier": "io.winmedic",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "O365Utility – Careum",
+        "title": "WinMedic",
         "width": 960,
         "height": 620,
         "minWidth": 960,

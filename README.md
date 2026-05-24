@@ -1,6 +1,6 @@
-# O365Utility
+# WinMedic
 
-A portable Windows desktop tool for IT administrators to install, repair, and maintain Microsoft 365 on Windows 10/11 workstations.
+A portable Windows desktop tool for IT administrators to troubleshoot, repair, and maintain Windows workstations in office and school environments.
 
 Built with **Tauri 2.0** (Rust backend) + **React / TypeScript** frontend. Ships as a single `.exe` — no installer, no runtime dependencies.
 
@@ -46,7 +46,7 @@ Built with **Tauri 2.0** (Rust backend) + **React / TypeScript** frontend. Ships
 ## Project Structure
 
 ```
-O365Utility/
+WinMedic/
 ├── src/                    # React frontend
 │   ├── components/         # UI sections (Office, Teams, Cache, ...)
 │   ├── hooks/              # useEvent, useInvoke

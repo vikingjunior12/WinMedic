@@ -46,7 +46,7 @@ pub async fn create_local_user(
 
     if add_to_admins {
         ps.push_str(&format!(
-            "; Add-LocalGroupMember -Group 'Administrators' -Member '{esc_user}'"
+            "; Add-LocalGroupMember -SID 'S-1-5-32-544' -Member '{esc_user}'"
         ));
     }
 

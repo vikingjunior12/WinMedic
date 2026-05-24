@@ -1,10 +1,10 @@
 [package]
-name = "o365utility"
+name = "winmedic"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "o365utility_lib"
+name = "winmedic_lib"
 crate-type = ["lib", "cdylib", "staticlib"]
 
 [build-dependencies]

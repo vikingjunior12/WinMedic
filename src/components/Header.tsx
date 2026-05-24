@@ -7,7 +7,7 @@ export function Header() {
     <header className="header">
       <div className="header-left">
         <span className="header-logo">⚙</span>
-        <h1>O365Utility</h1>
+        <h1>WinMedic</h1>
         <span className="header-version">v0.1.0</span>
       </div>
       <div className="header-right">
