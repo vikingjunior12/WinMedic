@@ -1,11 +1,18 @@
 use crate::services::process;
 
+fn winget_says_not_installed(r: &process::ProcessResult) -> bool {
+    let combined = format!("{} {}", r.stdout, r.stderr).to_lowercase();
+    combined.contains("no installed package found")
+        || combined.contains("no package found")
+        || combined.contains("nicht gefunden")
+}
+
 #[tauri::command]
 pub async fn uninstall_onedrive() -> Result<String, String> {
     let _ = process::run("taskkill", &["/F", "/IM", "OneDrive.exe"]).await;
 
     // 1. Winget (MSIX + modern installer)
-    if let Ok(r) = process::run(
+    match process::run(
         "winget",
         &[
             "uninstall",
@@ -17,16 +24,15 @@ pub async fn uninstall_onedrive() -> Result<String, String> {
     )
     .await
     {
-        if r.exit_code == 0 {
-            return Ok("OneDrive uninstalled via winget".to_string());
-        }
+        Ok(r) if r.exit_code == 0 => return Ok("OneDrive uninstalled via winget".to_string()),
+        Ok(r) if winget_says_not_installed(&r) => return Ok("OneDrive is not installed – nothing to do".to_string()),
+        _ => {}
     }
 
     // 2. Fallback: OneDriveSetup.exe via Registry → feste Pfade → rekursive Suche
     let ps = r#"
 $setup = $null
 
-# Registry-Uninstall-String
 $regPaths = @(
     'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\OneDriveSetup.exe',
     'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\OneDriveSetup.exe',
@@ -40,7 +46,6 @@ foreach ($reg in $regPaths) {
     }
 }
 
-# Feste Pfade
 if (-not $setup) {
     $fixed = @(
         "$env:SystemRoot\SysWOW64\OneDriveSetup.exe",
@@ -52,7 +57,6 @@ if (-not $setup) {
     $setup = $fixed | Where-Object { Test-Path $_ } | Select-Object -First 1
 }
 
-# Rekursive Suche in bekannten Verzeichnissen
 if (-not $setup) {
     $searchRoots = @(
         "$env:LOCALAPPDATA\Microsoft\OneDrive",
@@ -69,8 +73,8 @@ if (-not $setup) {
 }
 
 if (-not $setup) {
-    Write-Error 'OneDriveSetup.exe not found and winget unavailable'
-    exit 1
+    Write-Output 'NOT_INSTALLED'
+    exit 0
 }
 
 Write-Output "Using: $setup"
@@ -79,7 +83,11 @@ exit $proc.ExitCode
 "#;
 
     let result = crate::services::powershell::run(ps).await?;
-    Ok(format!("OneDrive uninstalled via setup.exe: {}", result.trim()))
+    if result.trim() == "NOT_INSTALLED" {
+        Ok("OneDrive is not installed – nothing to do".to_string())
+    } else {
+        Ok(format!("OneDrive uninstalled via setup.exe: {}", result.trim()))
+    }
 }
 
 #[tauri::command]
@@ -104,8 +112,7 @@ pub async fn install_onedrive() -> Result<String, String> {
     }
 
     // 2. Fallback: direkter Download von Microsoft
-    const ONEDRIVE_URL: &str =
-        "https://go.microsoft.com/fwlink/?linkid=844652";
+    const ONEDRIVE_URL: &str = "https://go.microsoft.com/fwlink/?linkid=844652";
 
     let client = reqwest::Client::builder()
         .timeout(std::time::Duration::from_secs(120))

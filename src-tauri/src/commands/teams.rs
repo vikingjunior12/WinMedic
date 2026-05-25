@@ -1,5 +1,12 @@
 use crate::services::process;
 
+fn winget_says_not_installed(r: &process::ProcessResult) -> bool {
+    let combined = format!("{} {}", r.stdout, r.stderr).to_lowercase();
+    combined.contains("no installed package found")
+        || combined.contains("no package found")
+        || combined.contains("nicht gefunden")
+}
+
 const TEAMS_INSTALLER_URL: &str =
     "https://statics.teams.cdn.office.net/production-windows-x86/lkg/MSTeamsSetup.exe";
 
@@ -48,17 +55,21 @@ pub async fn uninstall_teams() -> Result<String, String> {
     }
 
     // 1. Winget (New Teams)
+    let mut any_found = false;
     for id in &["Microsoft.Teams", "Microsoft.Teams.Free"] {
-        if let Ok(r) = process::run(
+        match process::run(
             "winget",
             &["uninstall", "--id", id, "-e", "--silent", "--accept-source-agreements"],
         )
         .await
         {
-            if r.exit_code == 0 {
-                return Ok(format!("Teams uninstalled via winget ({id})"));
-            }
+            Ok(r) if r.exit_code == 0 => { any_found = true; }
+            Ok(r) if winget_says_not_installed(&r) => {}
+            _ => {}
         }
+    }
+    if any_found {
+        return Ok("Teams uninstalled via winget".to_string());
     }
 
     // 2. Fallback: AppX + Registry + klassischer Uninstaller

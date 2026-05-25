@@ -183,6 +183,17 @@ pub async fn repair_office_online(options: OfficeInstallOptions) -> Result<Strin
 
 #[tauri::command]
 pub async fn uninstall_office() -> Result<String, String> {
+    // Prüfen ob Office überhaupt installiert ist
+    let office_paths = [
+        r"C:\Program Files\Microsoft Office",
+        r"C:\Program Files (x86)\Microsoft Office",
+        r"C:\Program Files\Common Files\Microsoft Shared\ClickToRun\OfficeC2RClient.exe",
+    ];
+    let is_installed = office_paths.iter().any(|p| std::path::Path::new(p).exists());
+    if !is_installed {
+        return Ok("Office is not installed – nothing to do".to_string());
+    }
+
     let odt = extract_odt()?;
     let remove_xml = write_xml("winmedic_remove.xml", OFFICE_REMOVE_XML)?;
 
