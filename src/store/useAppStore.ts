@@ -9,17 +9,16 @@ export interface Profile {
 
 const BUILT_IN_PROFILES: Profile[] = [
   {
-    id: "full-setup",
-    name: "Full Setup",
+    id: "install-software",
+    name: "Install Software",
     options: {
       install_office: true,
       install_teams: true,
-      install_onenote: true,
     },
   },
   {
-    id: "repair-only",
-    name: "Repair Only",
+    id: "repair-office",
+    name: "Repair Office",
     options: {
       quick_repair: true,
       clear_office_cache: true,
@@ -27,7 +26,7 @@ const BUILT_IN_PROFILES: Profile[] = [
     },
   },
   {
-    id: "cache-clear",
+    id: "clear-cache",
     name: "Clear Cache",
     options: {
       clear_office_cache: true,
@@ -36,11 +35,12 @@ const BUILT_IN_PROFILES: Profile[] = [
     },
   },
   {
-    id: "new-user",
-    name: "New User",
+    id: "uninstall-all",
+    name: "Uninstall All",
     options: {
-      install_office: true,
-      install_teams: true,
+      uninstall_office: true,
+      uninstall_teams: true,
+      uninstall_onedrive: true,
     },
   },
 ];
@@ -66,6 +66,7 @@ interface AppState {
   office_shared_computer_activation: boolean;
   // Repair / Deinstallation
   uninstall_office: boolean;
+  uninstall_teams: boolean;
   quick_repair: boolean;
   online_repair: boolean;
   license_reset: boolean;
@@ -122,6 +123,7 @@ const DEFAULT_STATE: AppState = {
   office_auto_updates: true,
   office_shared_computer_activation: false,
   uninstall_office: false,
+  uninstall_teams: false,
   quick_repair: false,
   online_repair: false,
   license_reset: false,
@@ -157,6 +159,10 @@ export const useAppStore = create<AppState & AppActions>((set, get) => ({
       install_office: false,
       install_teams: false,
       install_onenote: false,
+      uninstall_office: false,
+      uninstall_teams: false,
+      uninstall_onedrive: false,
+      install_onedrive: false,
       quick_repair: false,
       online_repair: false,
       license_reset: false,

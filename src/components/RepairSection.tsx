@@ -1,7 +1,7 @@
 import { useAppStore } from "../store/useAppStore";
 
 export function RepairSection() {
-  const { uninstall_office, quick_repair, online_repair, license_reset, set } = useAppStore();
+  const { uninstall_office, uninstall_teams, quick_repair, online_repair, license_reset, set } = useAppStore();
 
   return (
     <section className="card">
@@ -63,6 +63,21 @@ export function RepairSection() {
         <div>
           <span>Uninstall Office completely</span>
           <span className="hint hint--danger">Removes Office entirely – no rollback possible</span>
+        </div>
+      </label>
+
+      <label
+        className="checkbox-row checkbox-row--danger"
+        title="Terminates and fully removes Teams (New Teams, Classic Teams, AppX). Tries winget first, then registry/AppX fallback."
+      >
+        <input
+          type="checkbox"
+          checked={uninstall_teams}
+          onChange={(e) => set("uninstall_teams", e.target.checked)}
+        />
+        <div>
+          <span>Uninstall Teams completely</span>
+          <span className="hint hint--danger">Removes all Teams versions – no rollback possible</span>
         </div>
       </label>
     </section>

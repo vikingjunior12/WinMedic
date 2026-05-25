@@ -20,6 +20,7 @@ pub struct SetupOptions {
     pub office_shared_computer_activation: bool,
     // Repair / Deinstallation
     pub uninstall_office: bool,
+    pub uninstall_teams: bool,
     pub quick_repair: bool,
     pub online_repair: bool,
     pub license_reset: bool,

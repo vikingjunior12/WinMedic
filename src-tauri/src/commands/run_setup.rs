@@ -45,6 +45,7 @@ pub fn validate_setup_options(options: SetupOptions) -> Result<(), String> {
         || !options.winget_packages.is_empty()
         || options.uninstall_onedrive
         || options.install_onedrive
+        || options.uninstall_teams
     {
         // Mindestens eine Aktion ausgewählt
     } else if options.username.is_empty() {
@@ -106,6 +107,7 @@ pub async fn run_setup(app: AppHandle, options: SetupOptions) -> Result<Vec<Step
         if options.install_teams { n += 1; }
         if options.install_onenote { n += 1; }
         if options.uninstall_office { n += 1; }
+        if options.uninstall_teams { n += 1; }
         if options.quick_repair { n += 1; }
         if options.online_repair { n += 1; }
         if options.license_reset { n += 1; }
@@ -156,7 +158,14 @@ pub async fn run_setup(app: AppHandle, options: SetupOptions) -> Result<Vec<Step
         });
     }
 
-    // 5a. Office deinstallieren
+    // 5a. Teams deinstallieren
+    if options.uninstall_teams {
+        step!(app, steps, done, total, "Uninstall Teams", dry_run, async {
+            teams::uninstall_teams().await
+        });
+    }
+
+    // 5b. Office deinstallieren
     if options.uninstall_office {
         step!(app, steps, done, total, "Uninstall Office", dry_run, async {
             office::uninstall_office().await

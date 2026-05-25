@@ -45,6 +45,7 @@ export interface SetupOptions {
   office_auto_updates: boolean;
   office_shared_computer_activation: boolean;
   uninstall_office: boolean;
+  uninstall_teams: boolean;
   quick_repair: boolean;
   online_repair: boolean;
   license_reset: boolean;

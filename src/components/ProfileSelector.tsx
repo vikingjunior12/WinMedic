@@ -6,17 +6,18 @@ export function ProfileSelector() {
   return (
     <section className="card">
       <h2 className="card-title">Profiles</h2>
-      <div className="profile-grid">
+      <select
+        className="select-row"
+        value={activeProfileId ?? ""}
+        onChange={(e) => {
+          if (e.target.value) applyProfile(e.target.value);
+        }}
+      >
+        <option value="" disabled>Select a profile…</option>
         {profiles.map((p) => (
-          <button
-            key={p.id}
-            className={`profile-btn ${activeProfileId === p.id ? "profile-btn--active" : ""}`}
-            onClick={() => applyProfile(p.id)}
-          >
-            {p.name}
-          </button>
+          <option key={p.id} value={p.id}>{p.name}</option>
         ))}
-      </div>
+      </select>
       <label className="checkbox-row mt-sm">
         <input
           type="checkbox"

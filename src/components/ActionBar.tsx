@@ -24,6 +24,7 @@ export function ActionBar() {
       office_auto_updates: store.office_auto_updates,
       office_shared_computer_activation: store.office_shared_computer_activation,
       uninstall_office: store.uninstall_office,
+      uninstall_teams: store.uninstall_teams,
       quick_repair: store.quick_repair,
       online_repair: store.online_repair,
       license_reset: store.license_reset,
