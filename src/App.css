@@ -526,11 +526,25 @@ input.input-error { border-color: var(--error-color); }
 .sysinfo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
   padding: 5px 18px;
   font-size: 11px;
   color: var(--text-muted);
   background: var(--bg-deep);
   border-top: 1px solid var(--border);
   flex-shrink: 0;
+}
+
+.sysinfo-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sysinfo-sep {
+  width: 1px;
+  height: 12px;
+  background: var(--border);
+  flex-shrink: 0;
+  margin: 0 4px;
 }
