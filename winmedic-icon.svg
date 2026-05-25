@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181825"/>
+      <stop offset="100%" stop-color="#11111b"/>
+    </linearGradient>
+    <linearGradient id="shield-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cba6f7"/>
+      <stop offset="100%" stop-color="#89b4fa"/>
+    </linearGradient>
+    <linearGradient id="pulse-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#94e2d5"/>
+      <stop offset="100%" stop-color="#a6e3a1"/>
+    </linearGradient>
+    <filter id="glow" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shield-glow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="96" fill="url(#bg-grad)"/>
+
+  <!-- Shield body (filled dark) -->
+  <path
+    d="M256 52 L432 116 L432 268 C432 372 256 460 256 460 C256 460 80 372 80 268 L80 116 Z"
+    fill="#1e1e2e"
+    stroke="url(#shield-grad)"
+    stroke-width="16"
+    stroke-linejoin="round"
+    filter="url(#shield-glow)"
+  />
+
+  <!-- Inner shield highlight line -->
+  <path
+    d="M256 88 L400 140 L400 268 C400 348 256 424 256 424 C256 424 112 348 112 268 L112 140 Z"
+    fill="none"
+    stroke="url(#shield-grad)"
+    stroke-width="3"
+    stroke-linejoin="round"
+    opacity="0.25"
+  />
+
+  <!-- ECG / Heartbeat pulse line -->
+  <polyline
+    points="108,256 168,256 200,192 240,320 264,200 296,288 328,256 404,256"
+    stroke="url(#pulse-grad)"
+    stroke-width="22"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    fill="none"
+    filter="url(#glow)"
+  />
+</svg>
