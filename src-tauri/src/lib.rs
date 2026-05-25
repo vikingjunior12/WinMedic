@@ -13,6 +13,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             account::check_user_exists,
             account::create_local_user,
+            account_cleanup::clear_office_account_cache,
+            account_cleanup::remove_workplace_join,
             office::install_office,
             office::uninstall_office,
             office::repair_office_quick,

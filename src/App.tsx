@@ -7,6 +7,7 @@ import { ProfileSelector } from "./components/ProfileSelector";
 import { AccountSection } from "./components/AccountSection";
 import { SoftwareSection } from "./components/SoftwareSection";
 import { RepairSection } from "./components/RepairSection";
+import { AccountCleanupSection } from "./components/AccountCleanupSection";
 import { CacheSection } from "./components/CacheSection";
 import { OnedriveSection } from "./components/OnedriveSection";
 import { WingetSection } from "./components/WingetSection";
@@ -81,6 +82,7 @@ export default function App() {
           <AccountSection />
           <SoftwareSection />
           <RepairSection />
+          <AccountCleanupSection />
           <CacheSection />
           <OnedriveSection />
           {store.wingetAvailable && <WingetSection />}

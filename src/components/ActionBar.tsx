@@ -23,6 +23,8 @@ export function ActionBar() {
       office_architecture: store.office_architecture,
       office_auto_updates: store.office_auto_updates,
       office_shared_computer_activation: store.office_shared_computer_activation,
+      clear_office_account_cache: store.clear_office_account_cache,
+      remove_workplace_join: store.remove_workplace_join,
       uninstall_office: store.uninstall_office,
       uninstall_teams: store.uninstall_teams,
       quick_repair: store.quick_repair,

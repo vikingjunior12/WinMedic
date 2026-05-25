@@ -65,6 +65,8 @@ interface AppState {
   office_auto_updates: boolean;
   office_shared_computer_activation: boolean;
   // Repair / Deinstallation
+  clear_office_account_cache: boolean;
+  remove_workplace_join: boolean;
   uninstall_office: boolean;
   uninstall_teams: boolean;
   quick_repair: boolean;
@@ -122,6 +124,8 @@ const DEFAULT_STATE: AppState = {
   office_architecture: "64",
   office_auto_updates: true,
   office_shared_computer_activation: false,
+  clear_office_account_cache: false,
+  remove_workplace_join: false,
   uninstall_office: false,
   uninstall_teams: false,
   quick_repair: false,
@@ -159,6 +163,8 @@ export const useAppStore = create<AppState & AppActions>((set, get) => ({
       install_office: false,
       install_teams: false,
       install_onenote: false,
+      clear_office_account_cache: false,
+      remove_workplace_join: false,
       uninstall_office: false,
       uninstall_teams: false,
       uninstall_onedrive: false,

@@ -44,6 +44,8 @@ export interface SetupOptions {
   office_architecture: string;
   office_auto_updates: boolean;
   office_shared_computer_activation: boolean;
+  clear_office_account_cache: boolean;
+  remove_workplace_join: boolean;
   uninstall_office: boolean;
   uninstall_teams: boolean;
   quick_repair: boolean;

@@ -18,6 +18,9 @@ pub struct SetupOptions {
     pub office_architecture: String,
     pub office_auto_updates: bool,
     pub office_shared_computer_activation: bool,
+    // Account Cleanup
+    pub clear_office_account_cache: bool,
+    pub remove_workplace_join: bool,
     // Repair / Deinstallation
     pub uninstall_office: bool,
     pub uninstall_teams: bool,

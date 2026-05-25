@@ -1,4 +1,4 @@
-use crate::commands::{account, cache, office, onedrive, onenote, teams, winget};
+use crate::commands::{account, account_cleanup, cache, office, onedrive, onenote, teams, winget};
 use crate::models::setup_options::SetupOptions;
 use crate::models::step_result::{LogEntry, StepResult};
 use chrono::Local;
@@ -46,6 +46,8 @@ pub fn validate_setup_options(options: SetupOptions) -> Result<(), String> {
         || options.uninstall_onedrive
         || options.install_onedrive
         || options.uninstall_teams
+        || options.clear_office_account_cache
+        || options.remove_workplace_join
     {
         // Mindestens eine Aktion ausgewählt
     } else if options.username.is_empty() {
@@ -106,6 +108,8 @@ pub async fn run_setup(app: AppHandle, options: SetupOptions) -> Result<Vec<Step
         if options.install_office { n += 1; }
         if options.install_teams { n += 1; }
         if options.install_onenote { n += 1; }
+        if options.clear_office_account_cache { n += 1; }
+        if options.remove_workplace_join { n += 1; }
         if options.uninstall_office { n += 1; }
         if options.uninstall_teams { n += 1; }
         if options.quick_repair { n += 1; }
@@ -155,6 +159,19 @@ pub async fn run_setup(app: AppHandle, options: SetupOptions) -> Result<Vec<Step
     if options.install_onenote {
         step!(app, steps, done, total, "OneNote Backup Exporter", dry_run, async {
             onenote::install_onenote_backup_exporter().await
+        });
+    }
+
+    // Account Cleanup
+    if options.clear_office_account_cache {
+        step!(app, steps, done, total, "Clear Office Account Cache", dry_run, async {
+            account_cleanup::clear_office_account_cache().await
+        });
+    }
+
+    if options.remove_workplace_join {
+        step!(app, steps, done, total, "Remove Workplace Join", dry_run, async {
+            account_cleanup::remove_workplace_join().await
         });
     }
 
